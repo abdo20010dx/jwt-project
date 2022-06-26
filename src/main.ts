@@ -6,6 +6,7 @@ import {
 } from '@nestjs/platform-fastify';
 import { AppModule } from './app.module';
 import { AuthGuard } from './auth/auth.gaurd';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -31,6 +32,7 @@ async function bootstrap() {
 
   const reflector = app.get(Reflector);
   app.useGlobalGuards(new AuthGuard(reflector));
+  app.useGlobalPipes(new ValidationPipe());
 
   await app.listen(process.env.PORT, '0.0.0.0', (err, address) => {
     console.log(err);
