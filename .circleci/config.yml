@@ -11,7 +11,7 @@ jobs:
     docker:
       - image: cimg/base:stable
         environment:
-          MY_ENV_VAR_3: my-value-3
+          MY_ENV_VAR_3: abdo goma
           MY_ENV_VAR_4: my-value-4
     # Add steps to the job
     # See: https://circleci.com/docs/2.0/configuration-reference/#steps
@@ -19,7 +19,7 @@ jobs:
       - checkout
       - run:
           name: "Say hello"
-          command: "echo Hello, World!"
+          command: echo  $MY_ENV_VAR_3
           
   print-hello:
     # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
