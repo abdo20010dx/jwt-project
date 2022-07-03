@@ -35,7 +35,23 @@ jobs:
       - run:
           name: Build
           command: npm run build    
-
+  save_hello_world_output:
+    docker:
+      - image: circleci/node:13.8.0
+    steps:
+      - run : echo "hello abdo" > ~/abdo.txt
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - abdo.txt
+  print_output:
+        docker:
+        - image: circleci/node:13.8.0 
+        steps:
+          - attach_workspace:
+              at: ~/
+          - run : cat ~/abdo.txt
+                
   integration_tests:
     working_directory: ~/nest
     docker:
@@ -53,3 +69,7 @@ workflows:
   build-and-test:
     jobs:
       - build
+      - save_hello_world_output
+      - print_output:
+          requires:
+            - save_hello_world_output
